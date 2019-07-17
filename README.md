@@ -68,7 +68,7 @@ remote: Total 11 (delta 2), reused 7 (delta 0), pack-reused 0
 Unpacking objects: 100% (11/11), done.
 ```
 
-Get the Splunk module and it's dependency (stdlib) and put them in a modules/ directory somehow. Here I use the installed puppet agent to grab the modules.
+Get the Splunk module (docker branch) and it's dependency (stdlib) and put them in a modules/ directory somehow. Here I use the installed puppet agent to grab the modules.
 
 ```
 [vagrant@c7 dockersplunk]$ puppet module install cudgel-splunk
@@ -80,6 +80,9 @@ Notice: Installing -- do not interrupt ...
 └─┬ cudgel-splunk (v1.6.2)
   └── puppetlabs-stdlib (v4.25.1)
 [vagrant@c7 dockersplunk]$ ln -s ~/.puppetlabs/etc/code/modules modules
+[vagrant@c7 dockersplunk]$ cd modules
+[vagrant@c7 dockersplunk]$ rm -rf splunk
+[vagrant@c7 dockersplunk]$ git clone -b docker https://github.com/cudgel/splunk.git
 ```
 
 Start the installed Docker service.
