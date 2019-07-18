@@ -2,18 +2,22 @@
     "builders": [
         {
             "type": "docker",
-            "image": "centos:7",
-            "export_path": "centos7-puppet.tar",
-            "volumes": {
-                "splunk_data": "/srv/data"
-            }
+            "image": "debian:9",
+            "export_path": "debian9-puppet.tar",
+            "changes": [
+                "USER splunk",
+                "EXPOSE 8000",
+                "LABEL version=0.2",
+                "ENTRYPOINT [\"/opt/splunk/bin/splunk\"]",
+                "CMD [\"splunk\", \"start\"]"
+            ]
         }
     ],
     "provisioners": [
         {
             "type": "shell",
             "inline": [
-                "rpm -Uvh https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm && yum upgrade -y && yum update -y && yum install -y puppet-agent && yum clean all"
+                "apt-get update && apt-get install -y curl procps && curl -L -o /tmp/puppet6-release-jessie.deb https://apt.puppetlabs.com/puppet6-release-jessie.deb && dpkg -i /tmp/puppet6-release-jessie.deb && apt-get update && apt-get upgrade -y && apt-get install -y puppet-agent sudo && apt-get autoremove && apt-get clean"
             ]
         },
         {
@@ -29,7 +33,7 @@
         {
             "type": "docker-import",
             "repository": "cudgel/splunk",
-            "tag": "0.1"
+            "tag": "0.2"
         }
     ]
 }
