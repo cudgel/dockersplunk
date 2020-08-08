@@ -98,8 +98,7 @@ vagrant   6093  5545  0 10:44 pts/0    00:00:00 grep --color=auto docker
 Run Packer.
 
 ```
-[vagrant@c7 dockersplunk]$ sudo ../packer build machine_puppet.json                                                                                   [94/19377]
-docker output will be in this color.
+[vagrant@c7 dockersplunk]$ sudo ../packer build machine_puppet.json
 
 ==> docker: Creating a temporary directory for sharing data...
 ==> docker: Pulling Docker image: centos:7
