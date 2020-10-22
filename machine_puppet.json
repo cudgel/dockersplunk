@@ -34,6 +34,10 @@
             "type": "docker-import",
             "repository": "cudgel/splunk",
             "tag": "0.3"
+        },
+        {
+            "type": "docker-save",
+            "path": "cudgel-splunk.tar"
         }
     ]
 }
