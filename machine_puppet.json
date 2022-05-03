@@ -6,8 +6,8 @@
             "export_path": "debian10-puppet.tar",
             "changes": [
                 "USER splunk",
-                "EXPOSE 8000",
-                "LABEL version=0.2",
+                "EXPOSE 22 8000 8089 9998",
+                "LABEL version=0.3",
                 "ENTRYPOINT [\"/opt/splunk/bin/splunk\"]",
                 "CMD [\"splunk\", \"start\"]"
             ]
@@ -17,7 +17,7 @@
         {
             "type": "shell",
             "inline": [
-                "apt-get update && apt-get install -y curl procps && curl -L -o /tmp/puppet6-release-buster.deb https://apt.puppetlabs.com/puppet6-release-jessie.deb && dpkg -i /tmp/puppet6-release-buster.deb && apt-get update && apt-get upgrade -y && apt-get install -y puppet-agent sudo && apt-get autoremove && apt-get clean"
+                "apt-get update && apt-get install -y curl procps ssh && curl -L -o /tmp/puppet6-release-jessie.deb https://apt.puppetlabs.com/puppet6-release-jessie.deb && dpkg -i /tmp/puppet6-release-jessie.deb && apt-get update && apt-get upgrade -y && apt-get install -y puppet-agent sudo && apt-get autoremove && apt-get clean"
             ]
         },
         {
@@ -33,7 +33,7 @@
         {
             "type": "docker-import",
             "repository": "cudgel/splunk",
-            "tag": "0.2"
+            "tag": "0.3"
         }
     ]
 }
