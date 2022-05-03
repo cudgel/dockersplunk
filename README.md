@@ -1,22 +1,22 @@
 This is just a small project to test the Splunk module in Docker.
 
 
-Here I deploy a clean centos7 test host using Vagrant.
+Here I deploy a clean rocky8 test host using Vagrant.
 
 ```
-~/Projects/vagrant/centos7
-❯ vagrant init centos7-base
+~/Projects/vagrant/rocky8
+❯ vagrant init rocky8-base
 A `Vagrantfile` has been placed in this directory. You are now
 ready to `vagrant up` your first virtual environment! Please read
 the comments in the Vagrantfile as well as documentation on
 `vagrantup.com` for more information on using Vagrant.
 
-~/Projects/vagrant/centos7
+~/Projects/vagrant/rocky8
 ❯ vagrant up
 Bringing machine 'default' up with 'virtualbox' provider...
-==> default: Importing base box 'centos7-base'...
+==> default: Importing base box 'rocky8-base'...
 ==> default: Matching MAC address for NAT networking...
-==> default: Setting the name of the VM: centos7_default_1563372654765_8515
+==> default: Setting the name of the VM: rocky8_default_1563372654765_8515
 ==> default: Clearing any previously set network interfaces...
 ==> default: Preparing network interfaces based on configuration...
     default: Adapter 1: nat
@@ -37,13 +37,13 @@ Bringing machine 'default' up with 'virtualbox' provider...
 ==> default: Machine booted and ready!
 ==> default: Checking for guest additions in VM...
 ==> default: Mounting shared folders...
-    default: /vagrant => /Users/caldwell/Projects/vagrant/centos7
+    default: /vagrant => /Users/caldwell/Projects/vagrant/rocky8
 ```
 
 Connect to the new machine and install the necessary software to build the Docker image - Docker, Packer, and git.
 
 ```
-~/Projects/vagrant/centos7
+~/Projects/vagrant/rocky8
 ❯ vagrant ssh
 Last login: Thu Jan 31 17:17:22 2019 from gateway
 vagrant@c7 ~]$ sudo yum -y install docker git
@@ -101,17 +101,17 @@ Run Packer.
 [vagrant@c7 dockersplunk]$ sudo ../packer build machine_puppet.json
 
 ==> docker: Creating a temporary directory for sharing data...
-==> docker: Pulling Docker image: centos:7
-    docker: Trying to pull repository docker.io/library/centos ...
-    docker: 7: Pulling from docker.io/library/centos
+==> docker: Pulling Docker image: rocky:7
+    docker: Trying to pull repository docker.io/library/rocky ...
+    docker: 7: Pulling from docker.io/library/rocky
     docker: 8ba884070f61: Pulling fs layer
     docker: 8ba884070f61: Verifying Checksum
     docker: 8ba884070f61: Download complete
     docker: 8ba884070f61: Pull complete
     docker: Digest: sha256:a799dd8a2ded4a83484bbae769d97655392b3f86533ceb7dd96bbac929809f3c
-    docker: Status: Downloaded newer image for docker.io/centos:7
+    docker: Status: Downloaded newer image for docker.io/rocky:7
 ==> docker: Starting docker container...
-    docker: Run command: docker run -v splunk_data:/srv/data -v /root/.packer.d/tmp:/packer-files -d -i -t --entrypoint=/bin/sh -- centos:7
+    docker: Run command: docker run -v splunk_data:/srv/data -v /root/.packer.d/tmp:/packer-files -d -i -t --entrypoint=/bin/sh -- rocky:7
     docker: Container ID: 2e2f36c777b8a8300307aab4ebc96b7d0048dc1e272df40de82f2000435b734e
 ==> docker: Using docker communicator to connect: 172.17.0.2
 ==> docker: Provisioning with shell script: /tmp/packer-shell800033165
@@ -227,12 +227,12 @@ Run Packer.
     docker: Public key for puppet5-release-5.0.0-7.el7.noarch.rpm is not installed
     docker: --------------------------------------------------------------------------------
     docker: Total                                              1.3 MB/s |  36 MB  00:28
-    docker: Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+    docker: Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rocky-7
 ==> docker: Importing GPG key 0xF4A80EB5:
-==> docker:  Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+==> docker:  Userid     : "rocky-7 Key (rocky 7 Official Signing Key) <security@rocky.org>"
 ==> docker:  Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
-==> docker:  Package    : centos-release-7-6.1810.2.el7.centos.x86_64 (@CentOS)
-==> docker:  From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+==> docker:  Package    : rocky-release-7-6.1810.2.el7.rocky.x86_64 (@rocky)
+==> docker:  From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-rocky-7
     docker: Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppet5-release
 ==> docker: Importing GPG key 0xEF8D349F:
 ==> docker:  Userid     : "Puppet, Inc. Release Key (Puppet, Inc. Release Key) <release@puppet.com>"
