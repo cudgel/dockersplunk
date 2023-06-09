@@ -1,9 +1,10 @@
-This is just a small project to test the Splunk module in Docker.
+# Splunk testing in Docker
 
+This is just a small project to test the Splunk module in Docker.
 
 Here I deploy a clean rocky8 test host using Vagrant.
 
-```
+```bash
 ~/Projects/vagrant/rocky8
 ❯ vagrant init rocky8-base
 A `Vagrantfile` has been placed in this directory. You are now
@@ -42,7 +43,7 @@ Bringing machine 'default' up with 'virtualbox' provider...
 
 Connect to the new machine and install the necessary software to build the Docker image - Docker, Packer, and git.
 
-```
+```bash
 ~/Projects/vagrant/rocky8
 ❯ vagrant ssh
 Last login: Thu Jan 31 17:17:22 2019 from gateway
@@ -58,7 +59,7 @@ Archive:  packer.zip
 
 Clone this repo - really just a Packerfile and a Puppet manifest.
 
-```
+```bash
 [vagrant@c7 ~]$ git clone https://github.com/cudgel/dockersplunk.git
 Cloning into 'dockersplunk'...
 remote: Enumerating objects: 11, done.
@@ -70,7 +71,7 @@ Unpacking objects: 100% (11/11), done.
 
 Get the Splunk module (docker branch) and it's dependency (stdlib) and put them in a modules/ directory somehow. Here I use the installed puppet agent included on this base image to grab the modules. I replace the splunk module with the docker branch for now until this feature has been tested and released.
 
-```
+```bash
 [vagrant@c7 ~]$ cd dockersplunk
 [vagrant@c7 dockersplunk]$ puppet module install cudgel-splunk
 Notice: Preparing to install into /home/vagrant/.puppetlabs/etc/code/modules ...
@@ -85,7 +86,7 @@ Notice: Installing -- do not interrupt ...
 
 Start the installed Docker service.
 
-```
+```bash
 [vagrant@c7 dockersplunk]$ sudo systemctl start docker
 [vagrant@c7 dockersplunk]$ ps -ef | grep docker
 root      5967     1  3 10:44 ?        00:00:00 /usr/bin/dockerd-current --add-runtime docker-runc=/usr/libexec/docker/docker-runc-current --default-runtime=docker-runc --exec-opt native.cgroupdriver=systemd --userland-proxy-path=/usr/libexec/docker/docker-proxy-current --init-path=/usr/libexec/docker/docker-init-current --seccomp-profile=/etc/docker/seccomp.json --selinux-enabled --log-driver=journald --signature-verification=false --storage-driver overlay2
@@ -95,7 +96,7 @@ vagrant   6093  5545  0 10:44 pts/0    00:00:00 grep --color=auto docker
 
 Run Packer.
 
-```
+```bash
 [vagrant@c7 dockersplunk]$ sudo ../packer build machine_puppet.json
 
 ==> docker: Creating a temporary directory for sharing data...
